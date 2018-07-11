@@ -34,14 +34,12 @@ body {
 }
 
 #jp-top-panel {
-  border-bottom: var(--jp-border-width) solid var(--jp-border-color0);
   background: var(--jp-layout-color1);
   display: flex;
   min-height: var(--jp-private-menubar-height);
 }
 
 #jp-bottom-panel {
-  border-top: var(--jp-border-width) solid var(--jp-border-color0);
   background: var(--jp-layout-color1);
   display: flex;
 }
