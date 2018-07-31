@@ -138,7 +138,11 @@ describe('@jupyterlab/console', () => {
         handler.injected.connect(() => {
           done();
         });
-        foreign.kernel.requestExecute({ code, stop_on_error: true });
+        foreign.kernel.requestExecute({
+          code,
+          stop_on_error: true,
+          cellId: ''
+        });
       });
 
       it('should reject foreign cells if `false`', done => {
@@ -147,7 +151,11 @@ describe('@jupyterlab/console', () => {
         handler.rejected.connect(() => {
           done();
         });
-        foreign.kernel.requestExecute({ code, stop_on_error: true });
+        foreign.kernel.requestExecute({
+          code,
+          stop_on_error: true,
+          cellId: ''
+        });
       });
     });
 
@@ -199,7 +207,11 @@ describe('@jupyterlab/console', () => {
         handler.received.connect(() => {
           done();
         });
-        foreign.kernel.requestExecute({ code, stop_on_error: true });
+        foreign.kernel.requestExecute({
+          code,
+          stop_on_error: true,
+          cellId: ''
+        });
       });
 
       it('should inject relevant cells into the parent', done => {
@@ -211,7 +223,11 @@ describe('@jupyterlab/console', () => {
           expect(parent.widgets.length).to.be.greaterThan(0);
           done();
         });
-        foreign.kernel.requestExecute({ code, stop_on_error: true });
+        foreign.kernel.requestExecute({
+          code,
+          stop_on_error: true,
+          cellId: ''
+        });
       });
 
       it('should not reject relevant iopub messages', done => {
@@ -226,7 +242,11 @@ describe('@jupyterlab/console', () => {
             done();
           }
         });
-        foreign.kernel.requestExecute({ code, stop_on_error: true });
+        foreign.kernel.requestExecute({
+          code,
+          stop_on_error: true,
+          cellId: ''
+        });
       });
     });
   });

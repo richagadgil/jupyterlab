@@ -66,7 +66,8 @@ describe('Kernel.IKernel', () => {
           called = true;
         }
       });
-      await defaultKernel.requestExecute({ code: 'a=1' }, true).done;
+      await defaultKernel.requestExecute({ code: 'a=1', cellId: '' }, true)
+        .done;
       expect(called).to.be(true);
     });
   });
@@ -77,7 +78,8 @@ describe('Kernel.IKernel', () => {
       defaultKernel.iopubMessage.connect((k, msg) => {
         called = true;
       });
-      await defaultKernel.requestExecute({ code: 'a=1' }, true).done;
+      await defaultKernel.requestExecute({ code: 'a=1', cellId: '' }, true)
+        .done;
       expect(called).to.be(true);
     });
 
@@ -302,7 +304,7 @@ describe('Kernel.IKernel', () => {
       const emission = testEmission(defaultKernel.statusChanged, {
         find: () => defaultKernel.status === 'idle'
       });
-      await defaultKernel.requestExecute({ code: 'a=1' }).done;
+      await defaultKernel.requestExecute({ code: 'a=1', cellId: '' }).done;
       await emission;
     });
 
@@ -320,7 +322,8 @@ describe('Kernel.IKernel', () => {
       const emission = testEmission(defaultKernel.statusChanged, {
         find: () => defaultKernel.status === 'busy'
       });
-      await defaultKernel.requestExecute({ code: 'a=1' }, true).done;
+      await defaultKernel.requestExecute({ code: 'a=1', cellId: '' }, true)
+        .done;
       await emission;
     });
 
@@ -423,7 +426,7 @@ describe('Kernel.IKernel', () => {
   context('#dispose()', () => {
     it('should dispose of the resources held by the kernel', () => {
       let kernel = Kernel.connectTo(defaultKernel.model);
-      let future = kernel.requestExecute({ code: 'foo' });
+      let future = kernel.requestExecute({ code: 'foo', cellId: '' });
       expect(future.isDisposed).to.be(false);
       kernel.dispose();
       expect(future.isDisposed).to.be(true);
@@ -431,7 +434,7 @@ describe('Kernel.IKernel', () => {
 
     it('should be safe to call twice', () => {
       const kernel = Kernel.connectTo(defaultKernel.model);
-      let future = kernel.requestExecute({ code: 'foo' });
+      let future = kernel.requestExecute({ code: 'foo', cellId: '' });
       expect(future.isDisposed).to.be(false);
       kernel.dispose();
       expect(future.isDisposed).to.be(true);
@@ -654,7 +657,7 @@ describe('Kernel.IKernel', () => {
     it('should dispose of existing comm and future objects', async () => {
       let kernel = defaultKernel;
       let comm = kernel.connectToComm('test');
-      let future = kernel.requestExecute({ code: 'foo' });
+      let future = kernel.requestExecute({ code: 'foo', cellId: '' });
       kernel.restart();
       await kernel.ready;
       expect(future.isDisposed).to.be(true);
@@ -850,7 +853,8 @@ describe('Kernel.IKernel', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
 
       let options: KernelMessage.IOptions = {
@@ -918,7 +922,8 @@ describe('Kernel.IKernel', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
       let future = defaultKernel.requestExecute(options, false);
       await future.done;
@@ -936,7 +941,8 @@ describe('Kernel.IKernel', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
       let calls: string[] = [];
       let future: Kernel.IFuture;
@@ -1004,7 +1010,8 @@ describe('Kernel.IKernel', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
       let calls: string[] = [];
 
@@ -1063,7 +1070,8 @@ describe('Kernel.IKernel', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
       let calls: string[] = [];
       const tester = new KernelTester();
@@ -1119,7 +1127,8 @@ describe('Kernel.IKernel', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
       let calls: string[] = [];
       const tester = new KernelTester();
@@ -1186,7 +1195,8 @@ describe('Kernel.IKernel', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: true,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
 
       const tester = new KernelTester();

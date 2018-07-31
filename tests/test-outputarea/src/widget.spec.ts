@@ -124,7 +124,10 @@ describe('outputarea/widget', () => {
       it('should execute code on a kernel and send outputs to the model', () => {
         return session.kernel.ready
           .then(() => {
-            let future = session.kernel.requestExecute({ code: CODE });
+            let future = session.kernel.requestExecute({
+              code: CODE,
+              cellId: ''
+            });
             widget.future = future;
             return future.done;
           })
@@ -139,7 +142,10 @@ describe('outputarea/widget', () => {
         widget.model.fromJSON(DEFAULT_OUTPUTS);
         return session.kernel.ready
           .then(() => {
-            let future = session.kernel.requestExecute({ code: CODE });
+            let future = session.kernel.requestExecute({
+              code: CODE,
+              cellId: ''
+            });
             widget.future = future;
             return future.done;
           })
@@ -195,7 +201,7 @@ describe('outputarea/widget', () => {
 
       it('should execute code on a kernel and send outputs to the model', () => {
         return session.kernel.ready.then(() => {
-          return OutputArea.execute(CODE, widget, session).then(reply => {
+          return OutputArea.execute(CODE, widget, session, '').then(reply => {
             expect(reply.content.execution_count).to.be.ok();
             expect(reply.content.status).to.be('ok');
             expect(model.length).to.be(1);
@@ -205,7 +211,7 @@ describe('outputarea/widget', () => {
 
       it('should clear existing outputs', () => {
         widget.model.fromJSON(DEFAULT_OUTPUTS);
-        return OutputArea.execute(CODE, widget, session).then(reply => {
+        return OutputArea.execute(CODE, widget, session, '').then(reply => {
           expect(reply.content.execution_count).to.be.ok();
           expect(model.length).to.be(1);
         });
@@ -249,14 +255,14 @@ describe('outputarea/widget', () => {
             return s.initialize();
           })
           .then(() => {
-            let promise0 = OutputArea.execute(code0, widget0, ipySession);
-            let promise1 = OutputArea.execute(code1, widget1, ipySession);
+            let promise0 = OutputArea.execute(code0, widget0, ipySession, '');
+            let promise1 = OutputArea.execute(code1, widget1, ipySession, '');
             return Promise.all([promise0, promise1]);
           })
           .then(() => {
             expect(model1.length).to.be(3);
             expect(model1.toJSON()[1].data).to.eql({ 'text/plain': '1' });
-            return OutputArea.execute(code2, widget2, ipySession);
+            return OutputArea.execute(code2, widget2, ipySession, '');
           })
           .then(() => {
             expect(model1.length).to.be(3);
@@ -283,7 +289,7 @@ describe('outputarea/widget', () => {
         it('should create a stdin widget', () => {
           return Kernel.startNew().then(kernel => {
             let factory = new OutputArea.ContentFactory();
-            let future = kernel.requestExecute({ code: CODE });
+            let future = kernel.requestExecute({ code: CODE, cellId: '' });
             let options = {
               prompt: 'hello',
               password: false,

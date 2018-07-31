@@ -276,7 +276,10 @@ describe('@jupyterlab/apputils', () => {
       it('should display a busy status if the kernel status is not idle', () => {
         let item = Toolbar.createKernelStatusItem(session);
         let called = false;
-        let future = session.kernel.requestExecute({ code: 'a = 1' });
+        let future = session.kernel.requestExecute({
+          code: 'a = 1',
+          cellId: ''
+        });
         future.onIOPub = msg => {
           if (session.status === 'busy') {
             expect(item.hasClass('jp-FilledCircleIcon')).to.be(true);
@@ -293,7 +296,10 @@ describe('@jupyterlab/apputils', () => {
         let status = session.status;
         expect(item.node.title.toLowerCase()).to.contain(status);
         let called = false;
-        let future = session.kernel.requestExecute({ code: 'a = 1' });
+        let future = session.kernel.requestExecute({
+          code: 'a = 1',
+          cellId: ''
+        });
         future.onIOPub = msg => {
           if (session.status === 'busy') {
             expect(item.node.title.toLowerCase()).to.contain('busy');

@@ -32,7 +32,7 @@ function main() {
   const outputArea = new OutputArea({ model, rendermime });
 
   Kernel.startNew().then(kernel => {
-    outputArea.future = kernel.requestExecute({ code });
+    outputArea.future = kernel.requestExecute({ code, cellId: '' });
     document.getElementById('outputarea').appendChild(outputArea.node);
   });
 }
