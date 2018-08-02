@@ -95,7 +95,7 @@ describe('jupyter.services - Comm', () => {
         kernel.registerCommTarget('test', hook);
 
         // Request the comm creation.
-        await kernel.requestExecute({ code: SEND }, true).done;
+        await kernel.requestExecute({ code: SEND, cellId: '' }, true).done;
 
         // Get the comm.
         let [comm, msg] = await promise.promise;
@@ -116,7 +116,7 @@ describe('jupyter.services - Comm', () => {
         kernel.registerCommTarget('test', hook);
 
         // Request the comm creation.
-        await kernel.requestExecute({ code: SEND }, true).done;
+        await kernel.requestExecute({ code: SEND, cellId: '' }, true).done;
 
         // Get the comm.
         let comm = await commPromise.promise;
@@ -135,7 +135,7 @@ describe('jupyter.services - Comm', () => {
 
       it('should allow an optional target', () => {
         return kernel
-          .requestExecute({ code: SEND }, true)
+          .requestExecute({ code: SEND, cellId: '' }, true)
           .done.then(() => {
             return kernel.requestCommInfo({ target: 'test' });
           })
@@ -210,7 +210,9 @@ describe('jupyter.services - Comm', () => {
           };
           comm.send('quit');
         });
-        kernel.requestExecute({ code: SEND }, true).done.catch(done);
+        kernel
+          .requestExecute({ code: SEND, cellId: '' }, true)
+          .done.catch(done);
       });
     });
 
@@ -237,13 +239,15 @@ describe('jupyter.services - Comm', () => {
             done();
           };
         });
-        kernel.requestExecute({ code: BLIP }, true).done.catch(done);
+        kernel
+          .requestExecute({ code: BLIP, cellId: '' }, true)
+          .done.catch(done);
       });
     });
 
     context('#open()', () => {
       it('should send a message to the server', () => {
-        let future = kernel.requestExecute({ code: TARGET });
+        let future = kernel.requestExecute({ code: TARGET, cellId: '' });
         future.done.then(() => {
           let encoder = new TextEncoder();
           let data = encoder.encode('hello');

@@ -270,7 +270,7 @@ describe('session', () => {
           }
         });
         return defaultSession.kernel
-          .requestExecute({ code: 'a=1' }, true)
+          .requestExecute({ code: 'a=1', cellId: '' }, true)
           .done.then(() => {
             expect(called).to.be(true);
           });

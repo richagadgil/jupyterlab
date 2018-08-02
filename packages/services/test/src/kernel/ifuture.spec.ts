@@ -22,7 +22,10 @@ describe('Kernel.IFuture', () => {
 
   it('should have a msg attribute', async () => {
     const kernel = await Kernel.startNew();
-    const future = kernel.requestExecute({ code: 'print("hello")' });
+    const future = kernel.requestExecute({
+      code: 'print("hello")',
+      cellId: ''
+    });
     expect(typeof future.msg.header.msg_id).to.be('string');
     await future.done;
   });
@@ -35,7 +38,8 @@ describe('Kernel.IFuture', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
       let calls: string[] = [];
       tester = new KernelTester();
@@ -108,7 +112,8 @@ describe('Kernel.IFuture', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
       let calls: string[] = [];
       tester = new KernelTester();
@@ -170,7 +175,8 @@ describe('Kernel.IFuture', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
       let calls: string[] = [];
       tester = new KernelTester();
@@ -228,7 +234,8 @@ describe('Kernel.IFuture', () => {
         store_history: true,
         user_expressions: {},
         allow_stdin: false,
-        stop_on_error: false
+        stop_on_error: false,
+        cellId: ''
       };
       let calls: string[] = [];
       tester = new KernelTester();

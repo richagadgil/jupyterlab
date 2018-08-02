@@ -34,7 +34,7 @@ function main() {
     .then(() => {
       log(`Session renamed to ${session.path}`);
       // Execute and handle replies on the kernel.
-      let future = session.kernel.requestExecute({ code: 'a = 1' });
+      let future = session.kernel.requestExecute({ code: 'a = 1', cellId: '' });
       future.onReply = reply => {
         log('Got execute reply');
       };
